@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Courier+Prime&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e9e0d4;font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#7B2D3B;text-decoration:none}
+a:hover{color:#5E1F2B}
+@keyframes tt-fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes tt-slide{from{transform:translateX(-100%)}to{transform:none}}
+@keyframes tt-up{from{transform:translateY(100%)}to{transform:none}}
+@keyframes tt-dim{from{opacity:0}to{opacity:1}}
+[contenteditable]:focus{outline:none}
+*::-webkit-scrollbar{width:0;height:0;background:transparent}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:18px;padding:34px 20px 60px;box-sizing:border-box;background:radial-gradient(120% 80% at 50% 0%,#f3ece2 0%,#e5dacb 100%)">
+
+<div style="display:flex;align-items:baseline;gap:12px;color:#6E5241">
+<span style="font:600 15px/1 Lora,Georgia,serif;color:#5E1F2B;letter-spacing:.02em">Tinta</span>
+<span style="font:500 11.5px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9b8a7c">Escribir historias · Android · v2</span>
+</div>
+
+<div style="width:430px;height:900px;border-radius:44px;padding:9px;box-sizing:border-box;background:linear-gradient(160deg,#3a2f2a,#241c19);box-shadow:0 40px 90px rgba(60,40,30,.34),0 2px 0 rgba(255,255,255,.35) inset">
+<div style="position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:#FBF7F1;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px 4px;flex:none">
+<span style="font:600 13px/1 Manrope,sans-serif;color:#2A2320">9:41</span>
+<span style="display:flex;align-items:center;gap:5px;color:#2A2320">
+<span style="font-family:'Material Symbols Rounded';font-size:15px">signal_cellular_alt</span>
+<span style="font-family:'Material Symbols Rounded';font-size:15px">wifi</span>
+<span style="font-family:'Material Symbols Rounded';font-size:15px">battery_full</span>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:6px;padding:8px 10px 10px;flex:none;border-bottom:1px solid #EDE4D8">
+<div role="button" onClick="{{ openDrawer }}" style="width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#5E1F2B;cursor:pointer" style-active="background:rgba(123,45,59,.10)">
+<span style="font-family:'Material Symbols Rounded';font-size:24px">menu</span>
+</div>
+
+<sc-if value="{{ inProject }}" hint-placeholder-val="{{ false }}">
+<div role="button" onClick="{{ openProjects }}" style="flex:1;min-width:0;display:flex;align-items:center;gap:7px;padding:5px 10px;border-radius:12px;cursor:pointer" style-active="background:rgba(110,82,65,.08)">
+<div style="width:28px;height:28px;flex:none;border-radius:9px;background:linear-gradient(150deg,#7B2D3B,#5E1F2B);display:flex;align-items:center;justify-content:center;font:600 12px/1 Lora,serif;color:#FBF7F1">{{ projectInitial }}</div>
+<div style="min-width:0;flex:1">
+<div style="font:600 13.5px/1.25 Lora,Georgia,serif;color:#2A2320;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ projectName }}</div>
+<div style="font:500 10.5px/1.3 Manrope,sans-serif;color:#9b8a7c;display:flex;align-items:center;gap:4px">
+<span style="font-family:'Material Symbols Rounded';font-size:12px;color:#35513F">cloud_done</span>Guardado en Drive · hace 2 min
+</div>
+</div>
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:#9b8a7c;flex:none">expand_more</span>
+</div>
+</sc-if>
+<sc-if value="{{ inLibraryBar }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;min-width:0;display:flex;align-items:center;gap:9px;padding:5px 10px">
+<div style="width:28px;height:28px;flex:none;border-radius:9px;background:#F1E9DE;display:flex;align-items:center;justify-content:center;color:#5E1F2B">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">stylus_note</span>
+</div>
+<div style="min-width:0;flex:1">
+<div style="font:600 14px/1.25 Lora,Georgia,serif;color:#2A2320">Tinta</div>
+<div style="font:500 10.5px/1.3 Manrope,sans-serif;color:#9b8a7c;display:flex;align-items:center;gap:4px">
+<span style="font-family:'Material Symbols Rounded';font-size:12px;color:#35513F">cloud_done</span>Tu biblioteca · Drive al día
+</div>
+</div>
+</div>
+</sc-if>
+
+<div role="button" onClick="{{ openSearch }}" style="width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#5E1F2B;cursor:pointer" style-active="background:rgba(123,45,59,.10)">
+<span style="font-family:'Material Symbols Rounded';font-size:22px">search</span>
+</div>
+</div>
+
+<div style="flex:1;min-height:0;overflow-y:auto;position:relative">
+
+<sc-if value="{{ isLibrary }}" hint-placeholder-val="{{ true }}">
+<div style="padding:20px 18px 110px;animation:tt-fade .28s ease both">
+<div style="font:400 22px/1.25 Lora,Georgia,serif;color:#2A2320">Buenas tardes, Marta.</div>
+<div style="font:500 13px/1.4 Manrope,sans-serif;color:#9b8a7c;margin-top:5px">{{ projectCountLine }}</div>
+
+<div role="button" onClick="{{ resume }}" style="margin-top:18px;display:flex;align-items:center;gap:13px;padding:14px;border-radius:20px;background:linear-gradient(155deg,#7B2D3B,#4d1b25);color:#FBF7F1;box-shadow:0 10px 26px rgba(94,31,43,.28);cursor:pointer" style-active="filter:brightness(1.08)">
+<div style="width:42px;height:56px;flex:none;border-radius:4px 8px 8px 4px;background:rgba(251,247,241,.14);box-shadow:inset 5px 0 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center">
+<span style="font-family:'Material Symbols Rounded';font-size:20px">edit_note</span>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font:600 9.5px/1 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(251,247,241,.66)">Continuar donde lo dejaste</div>
+<div style="font:500 14.5px/1.3 Lora,Georgia,serif;margin-top:6px">3. El nombre de Adela</div>
+<div style="font:500 11px/1.3 Manrope,sans-serif;color:rgba(251,247,241,.72);margin-top:3px">El jardín de las horas muertas · ayer</div>
+</div>
+<span style="font-family:'Material Symbols Rounded';font-size:22px;color:rgba(251,247,241,.85)">arrow_forward</span>
+</div>
+
+<div style="margin-top:16px;display:flex;align-items:center;gap:16px;padding:16px;border-radius:20px;background:#F2F0E6;border:1px solid #E1E3D5">
+<div style="width:64px;height:64px;flex:none;border-radius:50%;background:conic-gradient(#35513F 0turn .64turn,#DDE0D2 .64turn 1turn);display:flex;align-items:center;justify-content:center">
+<div style="width:48px;height:48px;border-radius:50%;background:#F2F0E6;display:flex;align-items:center;justify-content:center">
+<span style="font:600 14px/1 Manrope,sans-serif;color:#35513F">64%</span>
+</div>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font:600 14px/1.3 Manrope,sans-serif;color:#2A2320">Objetivo de hoy</div>
+<div style="font:500 12.5px/1.5 Manrope,sans-serif;color:#6E5241;margin-top:3px">{{ goalLine }}</div>
+<div style="font:500 11.5px/1.4 Manrope,sans-serif;color:#9b8a7c;margin-top:6px">Llevas 4 días seguidos escribiendo 🌱</div>
+</div>
+</div>
+
+<div style="font:600 11.5px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9b8a7c;margin:26px 0 12px">Tus proyectos</div>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{ projectRows }}" as="p" hint-placeholder-count="3">
+<div role="button" onClick="{{ p.open }}" style="display:flex;gap:14px;padding:14px;border-radius:18px;background:#fff;border:1px solid #EDE4D8;box-shadow:0 1px 2px rgba(60,40,30,.05);cursor:pointer" style-active="border-color:#7B2D3B">
+<div style="width:52px;height:70px;flex:none;border-radius:5px 10px 10px 5px;background:linear-gradient(150deg,{{ p.c1 }},{{ p.c2 }});box-shadow:inset 6px 0 0 rgba(0,0,0,.22);display:flex;align-items:flex-end;padding:8px 7px;box-sizing:border-box">
+<span style="font:500 8.5px/1.2 Lora,serif;color:rgba(251,247,241,.8)">{{ p.genre }}</span>
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px">
+<div style="font:500 15.5px/1.3 Lora,Georgia,serif;color:#2A2320">{{ p.name }}</div>
+<div style="font:500 12px/1.3 Manrope,sans-serif;color:#9b8a7c">{{ p.meta }}</div>
+<div style="height:5px;border-radius:99px;background:#EFE7DB;overflow:hidden">
+<div style="width:{{ p.pct }};height:100%;border-radius:99px;background:{{ p.bar }}"></div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
+<div style="padding:18px 18px 100px;animation:tt-fade .28s ease both">
+<div role="button" onClick="{{ goLibrary }}" style="display:flex;align-items:center;gap:5px;font:600 12px/1 Manrope,sans-serif;color:#7B2D3B;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_back</span>Biblioteca
+</div>
+<div style="font:400 21px/1.25 Lora,Georgia,serif;color:#2A2320;margin-top:12px">{{ projectName }}</div>
+<div style="display:flex;gap:14px;margin-top:8px;font:500 12px/1.4 Manrope,sans-serif;color:#9b8a7c">
+<span>{{ projectMeta }}</span><span style="color:#35513F">Editado hace 2 min</span>
+</div>
+
+<div style="display:flex;gap:8px;margin-top:16px;overflow-x:auto;padding-bottom:2px">
+<div role="button" onClick="{{ resume }}" style="flex:none;display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:99px;background:#7B2D3B;color:#FBF7F1;font:600 12.5px/1 Manrope,sans-serif;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">edit</span>Seguir escribiendo
+</div>
+<div role="button" onClick="{{ goTimeline }}" style="flex:none;display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:99px;background:#fff;border:1px solid #E4D9CC;color:#5E1F2B;font:600 12.5px/1 Manrope,sans-serif;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">timeline</span>Línea temporal
+</div>
+</div>
+
+<div style="font:600 11.5px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9b8a7c;margin:24px 0 10px">Carpetas del proyecto</div>
+
+<div style="border-radius:18px;background:#fff;border:1px solid #EDE4D8;overflow:hidden">
+
+<div role="button" onClick="{{ toggleMan }}" style="display:flex;align-items:center;gap:12px;padding:14px 14px;cursor:pointer" style-active="background:#FBF7F1">
+<span style="font-family:'Material Symbols Rounded';font-size:22px;color:#7B2D3B">folder</span>
+<div style="flex:1;min-width:0">
+<div style="font:600 14px/1.3 Manrope,sans-serif;color:#2A2320">Manuscrito</div>
+<div style="font:500 11.5px/1.3 Manrope,sans-serif;color:#9b8a7c">2 partes · {{ chapterTotal }} capítulos</div>
+</div>
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:#c0b2a3">{{ manChevron }}</span>
+</div>
+
+<sc-if value="{{ manOpen }}" hint-placeholder-val="{{ true }}">
+<div style="border-top:1px solid #F3EBE0">
+<div role="button" onClick="{{ openP1 }}" style="display:flex;align-items:center;gap:11px;padding:12px 14px 12px 40px;background:#FDFBF7;cursor:pointer" style-active="background:#F7F1E8">
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:#6E5241">folder_open</span>
+<div style="flex:1;min-width:0">
+<div style="font:600 13.5px/1.3 Manrope,sans-serif;color:#2A2320">Parte I — El invierno</div>
+<div style="font:500 11px/1.3 Manrope,sans-serif;color:#9b8a7c">{{ p1Meta }}</div>
+</div>
+<span style="font-family:'Material Symbols Rounded';font-size:18px;color:#c0b2a3">chevron_right</span>
+</div>
+<div role="button" onClick="{{ openP2 }}" style="display:flex;align-items:center;gap:11px;padding:12px 14px 12px 40px;background:#FDFBF7;border-top:1px solid #F3EBE0;cursor:pointer" style-active="background:#F7F1E8">
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:#6E5241">folder</span>
+<div style="flex:1;min-width:0">
+<div style="font:600 13.5px/1.3 Manrope,sans-serif;color:#2A2320">Parte II — La grieta</div>
+<div style="font:500 11px/1.3 Manrope,sans-serif;color:#9b8a7c">{{ p2Meta }}</div>
+</div>
+<span style="font-family:'Material Symbols Rounded';font-size:18px;color:#c0b2a3">chevron_right</span>
+</div>
+</div>
+</sc-if>
+
+<div role="button" onClick="{{ togglePer }}" style="display:flex;align-items:center;gap:12px;padding:14px;border-top:1px solid #F3EBE0;cursor:pointer" style-active="background:#FBF7F1">
+<span style="font-family:'Material Symbols Rounded';font-size:22px;color:#35513F">folder</span>
+<div style="flex:1;min-width:0">
+<div style="font:600 14px/1.3 Manrope,sans-serif;color:#2A2320">Personajes</div>
+<div style="font:500 11.5px/1.3 Manrope,sans-serif;color:#9b8a7c">{{ charCount }} fichas</div>
+</div>
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:#c0b2a3">{{ perChevron }}</span>
+</div>
+
+<sc-if value="{{ perOpen }}" hint-placeholder-val="{{ false }}">
+<div style="border-top:1px solid #F3EBE0">
+<sc-for list="{{ charRows }}" as="ch" hint-placeholder-count="3">
+<div role="button" onClick="{{ ch.open }}" style="display:flex;align-items:center;gap:11px;padding:11px 14px 11px 40px;background:#FDFBF7;border-bottom:1px solid #F3EBE0;cursor:pointer" style-active="background:#F7F1E8">
+<div style="width:28px;height:28px;flex:none;border-radius:50%;background:#E7DFD2;display:flex;align-items:center;justify-content:center;font:600 11px/1 Manrope,sans-serif;color:#6E5241">{{ ch.ini }}</div>
+<div style="flex:1;min-width:0">
+<div style="font:600 13.5px/1.3 Manrope,sans-serif;color:#2A2320">{{ ch.name }}</div>
+<div style="font:500 11px/1.3 Manrope,sans-serif;color:#9b8a7c">{{ ch.role }}</div>
+</div>
+<span style="font-family:'Material Symbols Rounded';font-size:18px;color:#c0b2a3">chevron_right</span>
+</div>
+</sc-for>
+<div role="button" onClick="{{ addCharacter }}" style="display:flex;align-items:center;gap:11px;padding:11px 14px 11px 40px;background:#FDFBF7;color:#7B2D3B;cursor:pointer" style-active="background:#F7F1E8">
+<span style="font-family:'Material Symbols Rounded';font-size:20px">person_add</span>
+<span style="font:600 12.5px/1 Manrope,sans-serif">Nueva ficha de personaje</span>
+</div>
+</div>
+</sc-if>
+
+<div role="button" onClick="{{ goWorld }}" style="display:flex;align-items:center;gap:12px;padding:14px;border-top:1px solid #F3EBE0;cursor:pointer" style-active="background:#FBF7F1">
+<span style="font-family:'Material Symbols Rounded';font-size:22px;color:#6E5241">folder</span>
+<div style="flex:1;min-width:0">
+<div style="font:600 14px/1.3 Manrope,sans-serif;color:#2A2320">Mundo</div>
+<div style="font:500 11.5px/1.3 Manrope,sans-serif;color:#9b8a7c">5 notas · geografía, mitos</div>
+</div>
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:#c0b2a3">chevron_right</span>
+</div>
+
+<div role="button" onClick="{{ goNotes }}" style="display:flex;align-items:center;gap:12px;padding:14px;border-top:1px solid #F3EBE0;cursor:pointer" style-active="background:#FBF7F1">
+<span style="font-family:'Material Symbols Rounded';font-size:22px;color:#9b8a7c">folder</span>
+<div style="flex:1;min-width:0">
+<div style="font:600 14px/1.3 Manrope,sans-serif;color:#2A2320">Notas sueltas</div>
+<div style="font:500 11.5px/1.3 Manrope,sans-serif;color:#9b8a7c">{{ noteCount }} notas</div>
+</div>
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:#c0b2a3">chevron_right</span>
+</div>
+
+<sc-for list="{{ extraRows }}" as="ex" hint-placeholder-count="0">
+<div style="display:flex;align-items:center;gap:12px;padding:14px;border-top:1px solid #F3EBE0">
+<span style="font-family:'Material Symbols Rounded';font-size:22px;color:#9b8a7c">{{ ex.icon }}</span>
+<div style="flex:1;min-width:0">
+<div contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="font:600 14px/1.3 Manrope,sans-serif;color:#2A2320;outline:none">{{ ex.name }}</div>
+<div style="font:500 11.5px/1.3 Manrope,sans-serif;color:#b3a597">{{ ex.hint }}</div>
+</div>
+<sc-if value="{{ ex.isDoc }}" hint-placeholder-val="{{ false }}">
+<div role="button" onClick="{{ ex.open }}" style="width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#7B2D3B;cursor:pointer" style-active="background:rgba(123,45,59,.10)">
+<span style="font-family:'Material Symbols Rounded';font-size:19px">edit</span>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+
+<div style="display:flex;gap:10px;margin-top:14px">
+<div role="button" onClick="{{ addFolder }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;border-radius:14px;border:1.5px dashed #DCCFBF;color:#6E5241;font:600 12.5px/1 Manrope,sans-serif;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">create_new_folder</span>Carpeta
+</div>
+<div role="button" onClick="{{ addDoc }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;border-radius:14px;border:1.5px dashed #DCCFBF;color:#6E5241;font:600 12.5px/1 Manrope,sans-serif;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">note_add</span>Documento
+</div>
+</div>
+<div style="font:500 11px/1.5 Manrope,sans-serif;color:#b3a597;margin-top:10px;text-align:center">Las carpetas nuevas aparecen arriba · toca su nombre para renombrarla</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isChapters }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 18px 100px;animation:tt-fade .28s ease both">
+<div role="button" onClick="{{ goProject }}" style="display:flex;align-items:center;gap:5px;font:600 12px/1 Manrope,sans-serif;color:#7B2D3B;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_back</span>Manuscrito
+</div>
+<div style="font:400 21px/1.25 Lora,Georgia,serif;color:#2A2320;margin-top:12px">{{ folderTitle }}</div>
+<div style="font:500 12px/1.4 Manrope,sans-serif;color:#9b8a7c;margin-top:6px">{{ folderMeta }}</div>
+
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
+<sc-for list="{{ chapterRows }}" as="c" hint-placeholder-count="4">
+<div role="button" onClick="{{ c.open }}" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:#fff;border:1.5px solid {{ c.border }};box-shadow:{{ c.shadow }};cursor:pointer" style-active="border-color:#7B2D3B">
+<div style="font:500 16px/1 Lora,serif;color:{{ c.numColor }};width:22px;text-align:center;flex:none">{{ c.n }}</div>
+<div style="flex:1;min-width:0">
+<div style="font:500 14.5px/1.3 Lora,Georgia,serif;color:#2A2320">{{ c.title }}</div>
+<div style="display:flex;align-items:center;gap:7px;margin-top:5px;font:500 11.5px/1 Manrope,sans-serif;color:{{ c.metaColor }}">
+<span style="width:7px;height:7px;border-radius:50%;background:{{ c.dot }}"></span>{{ c.meta }}
+</div>
+</div>
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:{{ c.iconColor }}">{{ c.icon }}</span>
+</div>
+</sc-for>
+</div>
+
+<div role="button" onClick="{{ addChapter }}" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;padding:13px;border-radius:14px;border:1.5px dashed #DCCFBF;color:#6E5241;font:600 12.5px/1 Manrope,sans-serif;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">add</span>Nuevo capítulo
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isEditor }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;height:100%;animation:tt-fade .28s ease both">
+
+<sc-if value="{{ chrome }}" hint-placeholder-val="{{ true }}">
+<div style="flex:none;display:flex;align-items:center;gap:8px;padding:10px 12px 8px">
+<div role="button" onClick="{{ goChapters }}" style="width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#5E1F2B;cursor:pointer" style-active="background:rgba(123,45,59,.10)">
+<span style="font-family:'Material Symbols Rounded';font-size:22px">arrow_back</span>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font:500 13.5px/1.25 Lora,Georgia,serif;color:#2A2320;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ currentChapter }}</div>
+<div style="font:500 10.5px/1.3 Manrope,sans-serif;color:#35513F">Guardado en Drive</div>
+</div>
+<div role="button" onClick="{{ toggleFocus }}" style="width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#6E5241;cursor:pointer" style-active="background:rgba(110,82,65,.10)">
+<span style="font-family:'Material Symbols Rounded';font-size:21px">fullscreen</span>
+</div>
+</div>
+
+<div style="flex:none;display:flex;align-items:center;gap:1px;padding:4px 10px 8px;overflow:hidden;border-bottom:1px solid #EDE4D8">
+<div role="button" onClick="{{ undo }}" style="width:34px;height:36px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#6E5241;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:20px">undo</span>
+</div>
+<div role="button" onClick="{{ redo }}" style="width:34px;height:36px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#6E5241;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:20px">redo</span>
+</div>
+<div style="width:1px;height:22px;background:#E7DED2;margin:0 4px;flex:none"></div>
+<div role="button" onClick="{{ bold }}" style="width:34px;height:36px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#2A2320;font:700 15px/1 Lora,serif;cursor:pointer" style-active="background:#F1E9DE">B</div>
+<div role="button" onClick="{{ italic }}" style="width:34px;height:36px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#2A2320;font:italic 400 15px/1 Lora,serif;cursor:pointer" style-active="background:#F1E9DE">I</div>
+<div role="button" onClick="{{ underline }}" style="width:34px;height:36px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#2A2320;font:400 15px/1 Lora,serif;text-decoration:underline;cursor:pointer" style-active="background:#F1E9DE">U</div>
+<div style="width:1px;height:22px;background:#E7DED2;margin:0 4px;flex:none"></div>
+<div role="button" onClick="{{ heading }}" style="width:34px;height:36px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#2A2320;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:20px">title</span>
+</div>
+<div role="button" onClick="{{ insertScene }}" style="width:34px;height:36px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#7B2D3B;font:400 15px/1 Lora,serif;cursor:pointer" style-active="background:#F1E9DE">✦</div>
+<div role="button" onClick="{{ cycleAlign }}" style="width:34px;height:36px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#6E5241;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:20px">{{ alignIcon }}</span>
+</div>
+<div role="button" onClick="{{ openTypo }}" style="height:36px;flex:none;margin-left:auto;padding:0 12px;border-radius:10px;display:flex;align-items:center;gap:5px;background:#F1E9DE;color:#5E1F2B;font:600 13px/1 Manrope,sans-serif;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:19px">text_fields</span>Aa
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ focus }}" hint-placeholder-val="{{ false }}">
+<div style="flex:none;display:flex;justify-content:flex-end;padding:10px 12px 2px;animation:tt-fade .2s ease both">
+<div role="button" onClick="{{ toggleFocus }}" style="display:flex;align-items:center;gap:6px;height:36px;padding:0 13px;border-radius:99px;background:#F1E9DE;border:1px solid #E4D9CC;color:#5E1F2B;font:600 12.5px/1 Manrope,sans-serif;cursor:pointer" style-active="background:#E7DCCC">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">fullscreen_exit</span>Salir del modo enfoque
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ prose }}" hint-placeholder-val="{{ true }}">
+<div ref="{{ editorRef }}" contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" onInput="{{ recount }}" style="flex:1;min-height:0;overflow-y:auto;padding:22px 34px 28px;color:#2A2320;font-family:Lora,Georgia,serif;font-size:18px;line-height:1.75;-webkit-user-modify:read-write">
+<h3 style="font:500 15px/1.3 Manrope,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#9b8a7c;margin:0 0 18px">Capítulo tres</h3>
+<p style="margin:0 0 1.15em">Adela llegó al pueblo el mismo día que la niebla, y durante años nadie fue capaz de decidir cuál de las dos había traído a la otra.</p>
+<p style="margin:0 0 1.15em">Traía una maleta de cartón atada con cuerda de tender y un nombre que no era el suyo. En la fonda le preguntaron tres veces cómo se llamaba, y las tres veces contestó distinto, con la misma sonrisa cansada de quien ya ha aprendido que la verdad se paga.</p>
+<p style="margin:0 0 1.15em">Doña Elvira la miró desde la ventana del primer piso y dijo, sin dirigirse a nadie: <em>esa mujer va a abrir algo que llevamos cuarenta años cerrando</em>.</p>
+<p style="margin:0 0 1.15em">Nadie le llevó la contraria. En Valdeserena, cuando doña Elvira hablaba, hasta los perros bajaban la cabeza.</p>
+<p style="text-align:center;color:#c0b2a3;letter-spacing:.5em;margin:28px 0">✦ ✦ ✦</p>
+<p style="margin:0 0 1.15em">La casa de la cuesta llevaba vacía desde el invierno del accidente. Adela pagó seis meses por adelantado y no preguntó por qué el alquiler era tan barato.</p>
+</div>
+</sc-if>
+<sc-if value="{{ blank }}" hint-placeholder-val="{{ false }}">
+<div ref="{{ editorRef }}" contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" onInput="{{ recount }}" style="flex:1;min-height:0;overflow-y:auto;padding:22px 34px 28px;color:#2A2320;font-family:Lora,Georgia,serif;font-size:18px;line-height:1.75;-webkit-user-modify:read-write">
+<p style="margin:0;color:#b3a597">Escribe aquí la primera frase…</p>
+</div>
+</sc-if>
+
+<div style="flex:none;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-top:1px solid #EDE4D8;background:#FDFBF7">
+<span ref="{{ countRef }}" style="font:500 12px/1 Manrope,sans-serif;color:#9b8a7c">4.210 palabras · 21 min</span>
+<div style="display:flex;align-items:center;gap:5px;font:600 11.5px/1 Manrope,sans-serif;color:#35513F">
+<span style="font-family:'Material Symbols Rounded';font-size:16px">offline_pin</span>Disponible sin conexión
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCharacter }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 18px 100px;animation:tt-fade .28s ease both">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<div role="button" onClick="{{ goProject }}" style="display:flex;align-items:center;gap:5px;font:600 12px/1 Manrope,sans-serif;color:#7B2D3B;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_back</span>Personajes
+</div>
+<span style="display:flex;align-items:center;gap:4px;font:500 10.5px/1 Manrope,sans-serif;color:#b3a597">
+<span style="font-family:'Material Symbols Rounded';font-size:13px">stylus</span>Toca cualquier texto para editarlo
+</span>
+</div>
+
+<div style="display:flex;gap:14px;align-items:center;margin-top:16px">
+<div style="width:76px;height:76px;flex:none;border-radius:50%;background:#F1E9DE;border:1.5px dashed #D8C9B6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#9b8a7c">
+<span style="font-family:'Material Symbols Rounded';font-size:22px">add_a_photo</span>
+<span style="font:600 8.5px/1 Manrope,sans-serif">Foto</span>
+</div>
+<div style="flex:1;min-width:0">
+<div contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="font:400 21px/1.2 Lora,Georgia,serif;color:#2A2320;outline:none">{{ charName }}</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:9px">
+<span contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="padding:5px 9px;border-radius:99px;background:rgba(123,45,59,.09);color:#7B2D3B;font:600 11px/1 Manrope,sans-serif;outline:none">{{ charRole }}</span>
+<span contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="padding:5px 9px;border-radius:99px;background:#F1E9DE;color:#6E5241;font:600 11px/1 Manrope,sans-serif;outline:none">«La forastera»</span>
+<span contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="padding:5px 9px;border-radius:99px;background:#F1E9DE;color:#6E5241;font:600 11px/1 Manrope,sans-serif;outline:none">«Ada»</span>
+</div>
+</div>
+</div>
+
+<div style="display:flex;gap:10px;margin-top:16px">
+<div style="flex:1;padding:11px 12px;border-radius:14px;background:#fff;border:1px solid #EDE4D8">
+<div style="font:600 10px/1 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#9b8a7c">Edad</div>
+<div contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="font:500 15px/1 Lora,serif;color:#2A2320;margin-top:6px;outline:none">34 años</div>
+</div>
+<div style="flex:1;padding:11px 12px;border-radius:14px;background:#fff;border:1px solid #EDE4D8">
+<div style="font:600 10px/1 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#9b8a7c">Aparece en</div>
+<div style="font:500 15px/1 Lora,serif;color:#2A2320;margin-top:6px">9 capítulos</div>
+</div>
+</div>
+
+<div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+<div style="padding:15px;border-radius:16px;background:#fff;border:1px solid #EDE4D8">
+<div style="display:flex;align-items:center;gap:8px;color:#6E5241">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">face</span>
+<span style="font:600 12.5px/1 Manrope,sans-serif;letter-spacing:.04em">Aspecto físico</span>
+</div>
+<p contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="margin:9px 0 0;font:400 13.5px/1.65 Lora,Georgia,serif;color:#3f352f;text-wrap:pretty;outline:none">Alta, huesuda, manos de trabajar la tierra. Una cicatriz fina cruzándole la ceja izquierda que nunca explica. Se recoge el pelo con lo primero que encuentra.</p>
+</div>
+
+<div style="padding:15px;border-radius:16px;background:#fff;border:1px solid #EDE4D8">
+<div style="display:flex;align-items:center;gap:8px;color:#6E5241">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">psychology</span>
+<span style="font:600 12.5px/1 Manrope,sans-serif;letter-spacing:.04em">Personalidad</span>
+</div>
+<p contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="margin:9px 0 0;font:400 13.5px/1.65 Lora,Georgia,serif;color:#3f352f;text-wrap:pretty;outline:none">Cortés hasta que la acorralan. Miente por costumbre, no por maldad. Le cuesta aceptar ayuda y lo disimula con humor seco.</p>
+</div>
+
+<div style="padding:15px;border-radius:16px;background:#F7F3EC;border:1px solid #E9E0D1">
+<div style="display:flex;align-items:center;gap:8px;color:#6E5241">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">history_edu</span>
+<span style="font:600 12.5px/1 Manrope,sans-serif;letter-spacing:.04em">Trasfondo</span>
+</div>
+<p contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="margin:9px 0 0;font:400 13.5px/1.65 Lora,Georgia,serif;color:#3f352f;text-wrap:pretty;outline:none">Creció en la casa de acogida de Valdeserena hasta los once. Salió del pueblo la noche del incendio y volvió veintitrés años después sin decir a nadie por qué.</p>
+</div>
+
+<div style="padding:15px;border-radius:16px;background:#fff;border:1px solid #EDE4D8">
+<div style="display:flex;align-items:center;gap:8px;color:#35513F">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">trending_up</span>
+<span style="font:600 12.5px/1 Manrope,sans-serif;letter-spacing:.04em">Arco narrativo</span>
+</div>
+<div style="display:flex;flex-direction:column;margin-top:12px">
+<sc-for list="{{ arcRows }}" as="a" hint-placeholder-count="3">
+<div style="display:flex;gap:11px">
+<div style="display:flex;flex-direction:column;align-items:center;width:14px;flex:none">
+<span style="width:9px;height:9px;border-radius:50%;background:{{ a.bg }};border:{{ a.border }};box-sizing:border-box"></span>
+<span style="flex:1;width:1.5px;background:{{ a.line }}"></span>
+</div>
+<div style="padding-bottom:14px;flex:1">
+<div contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="font:600 12px/1.3 Manrope,sans-serif;color:{{ a.titleColor }};outline:none">{{ a.title }}</div>
+<div contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="font:400 12px/1.5 Manrope,sans-serif;color:#8B7D72;outline:none">{{ a.sub }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div role="button" onClick="{{ addArc }}" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;border-radius:12px;border:1.5px dashed #DCCFBF;color:#35513F;font:600 12px/1 Manrope,sans-serif;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">add</span>Añadir hito del arco
+</div>
+</div>
+
+<div style="padding:15px;border-radius:16px;background:#fff;border:1px solid #EDE4D8">
+<div style="display:flex;align-items:center;gap:8px;color:#6E5241">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">group</span>
+<span style="font:600 12.5px/1 Manrope,sans-serif;letter-spacing:.04em">Relaciones</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:9px;margin-top:12px">
+<sc-for list="{{ relationRows }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="width:30px;height:30px;flex:none;border-radius:50%;background:#E7DFD2;display:flex;align-items:center;justify-content:center;font:600 11px/1 Manrope,sans-serif;color:#6E5241">{{ r.ini }}</div>
+<div style="flex:1;min-width:0">
+<div contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="font:600 12.5px/1.3 Manrope,sans-serif;color:#2A2320;outline:none">{{ r.name }}</div>
+<div contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="font:400 11.5px/1.3 Manrope,sans-serif;color:#8B7D72;outline:none">{{ r.role }}</div>
+</div>
+</div>
+</sc-for>
+<div role="button" onClick="{{ addRelation }}" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border-radius:12px;border:1.5px dashed #DCCFBF;color:#6E5241;font:600 12px/1 Manrope,sans-serif;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">add</span>Añadir relación
+</div>
+</div>
+</div>
+
+<div style="padding:15px;border-radius:16px;background:#fff;border:1px solid #EDE4D8">
+<div style="display:flex;align-items:center;gap:8px;color:#6E5241">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">sticky_note_2</span>
+<span style="font:600 12.5px/1 Manrope,sans-serif;letter-spacing:.04em">Notas libres</span>
+</div>
+<p contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="margin:9px 0 0;font:400 13.5px/1.65 Lora,Georgia,serif;color:#3f352f;text-wrap:pretty;outline:none">Nunca dice mentiras sobre cosas pequeñas, solo sobre las importantes. Comprobar que esto se cumple en los capítulos 5 y 7.</p>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isWorld }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 18px 100px;animation:tt-fade .28s ease both">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<div role="button" onClick="{{ goProject }}" style="display:flex;align-items:center;gap:5px;font:600 12px/1 Manrope,sans-serif;color:#7B2D3B;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_back</span>Mundo
+</div>
+<span style="display:flex;align-items:center;gap:4px;font:500 10.5px/1 Manrope,sans-serif;color:#b3a597">
+<span style="font-family:'Material Symbols Rounded';font-size:13px">stylus</span>Toca cualquier texto para editarlo
+</span>
+</div>
+<div contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="font:400 22px/1.25 Lora,Georgia,serif;color:#2A2320;margin-top:14px;outline:none">La niebla de Valdeserena</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+<sc-for list="{{ tagRows }}" as="t" hint-placeholder-count="2">
+<span contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="padding:5px 9px;border-radius:99px;background:{{ t.bg }};color:{{ t.color }};font:600 11px/1 Manrope,sans-serif;outline:none">{{ t.label }}</span>
+</sc-for>
+<span role="button" onClick="{{ addTag }}" style="padding:5px 9px;border-radius:99px;background:#F1E9DE;color:#8B7D72;font:600 11px/1 Manrope,sans-serif;cursor:pointer">+ etiqueta</span>
+</div>
+
+<div style="margin-top:16px;padding:16px;border-radius:16px;background:#fff;border:1px solid #EDE4D8">
+<p contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="margin:0;font:400 14.5px/1.7 Lora,Georgia,serif;color:#3f352f;text-wrap:pretty;outline:none">Baja del monte cada tarde de octubre y se queda hasta marzo. No es meteorología: en el pueblo se dice que la niebla <em>devuelve</em> cosas. Objetos perdidos, olores, gente que se fue.</p>
+</div>
+
+<div style="margin-top:12px;padding:16px;border-radius:16px;background:#F2F0E6;border:1px solid #E1E3D5">
+<div style="font:600 11px/1 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#35513F">Reglas del mundo</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+<sc-for list="{{ ruleRows }}" as="ru" hint-placeholder-count="3">
+<div style="display:flex;gap:9px;font:400 13.5px/1.6 Lora,Georgia,serif;color:#3f352f">
+<span style="color:#35513F;flex:none">{{ ru.n }}.</span>
+<span contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="outline:none;flex:1">{{ ru.text }}</span>
+</div>
+</sc-for>
+</div>
+<div role="button" onClick="{{ addRule }}" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;padding:9px;border-radius:12px;border:1.5px dashed #cfd4c2;color:#35513F;font:600 12px/1 Manrope,sans-serif;cursor:pointer" style-active="background:#E7EADD">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">add</span>Añadir regla
+</div>
+</div>
+
+<div style="margin-top:12px;padding:16px;border-radius:16px;background:#fff;border:1px solid #EDE4D8">
+<div style="font:600 11px/1 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#9b8a7c">Mencionada en</div>
+<div style="display:flex;flex-direction:column;gap:2px;margin-top:10px">
+<div role="button" onClick="{{ openCh3 }}" style="display:flex;align-items:center;gap:9px;padding:9px 0;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:18px;color:#c0b2a3">description</span>
+<span style="flex:1;font:500 13px/1.3 Manrope,sans-serif;color:#7B2D3B">3. El nombre de Adela</span>
+<span style="font-family:'Material Symbols Rounded';font-size:17px;color:#d4c8ba">north_east</span>
+</div>
+<div role="button" onClick="{{ openCh4 }}" style="display:flex;align-items:center;gap:9px;padding:9px 0;border-top:1px solid #F3EBE0;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:18px;color:#c0b2a3">description</span>
+<span style="flex:1;font:500 13px/1.3 Manrope,sans-serif;color:#7B2D3B">4. Lo que la niebla trajo</span>
+<span style="font-family:'Material Symbols Rounded';font-size:17px;color:#d4c8ba">north_east</span>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isNotes }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 18px 100px;animation:tt-fade .28s ease both">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<div role="button" onClick="{{ goProject }}" style="display:flex;align-items:center;gap:5px;font:600 12px/1 Manrope,sans-serif;color:#7B2D3B;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_back</span>Proyecto
+</div>
+<span style="display:flex;align-items:center;gap:4px;font:500 10.5px/1 Manrope,sans-serif;color:#b3a597">
+<span style="font-family:'Material Symbols Rounded';font-size:13px">stylus</span>Toca una nota para editarla
+</span>
+</div>
+<div style="font:400 22px/1.25 Lora,Georgia,serif;color:#2A2320;margin-top:14px">Notas sueltas</div>
+<div style="font:500 12px/1.4 Manrope,sans-serif;color:#9b8a7c;margin-top:6px">Ideas que todavía no tienen sitio</div>
+
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
+<sc-for list="{{ noteRows }}" as="n" hint-placeholder-count="3">
+<div style="padding:14px 15px;border-radius:16px;background:#fff;border:1px solid #EDE4D8">
+<p contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="margin:0;font:400 14px/1.65 Lora,Georgia,serif;color:#3f352f;text-wrap:pretty;outline:none">{{ n.text }}</p>
+<div style="font:500 10.5px/1 Manrope,sans-serif;color:#b3a597;margin-top:9px">{{ n.when }}</div>
+</div>
+</sc-for>
+</div>
+<div role="button" onClick="{{ addNote }}" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;padding:13px;border-radius:14px;border:1.5px dashed #DCCFBF;color:#6E5241;font:600 12.5px/1 Manrope,sans-serif;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">add</span>Nueva nota
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTimeline }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 18px 100px;animation:tt-fade .28s ease both">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<div role="button" onClick="{{ goProject }}" style="display:flex;align-items:center;gap:5px;font:600 12px/1 Manrope,sans-serif;color:#7B2D3B;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_back</span>Proyecto
+</div>
+<span style="display:flex;align-items:center;gap:4px;font:500 10.5px/1 Manrope,sans-serif;color:#b3a597">
+<span style="font-family:'Material Symbols Rounded';font-size:13px">stylus</span>Toca un suceso para editarlo
+</span>
+</div>
+<div style="font:400 22px/1.25 Lora,Georgia,serif;color:#2A2320;margin-top:14px">Línea temporal</div>
+<div style="font:500 12px/1.4 Manrope,sans-serif;color:#9b8a7c;margin-top:6px">Lo que pasó, aunque no esté escrito todavía</div>
+
+<div style="margin-top:20px;display:flex;flex-direction:column">
+<sc-for list="{{ eventRows }}" as="e" hint-placeholder-count="4">
+<div style="display:flex;gap:14px">
+<div style="display:flex;flex-direction:column;align-items:center;width:16px;flex:none">
+<span style="width:11px;height:11px;border-radius:50%;background:{{ e.bg }};border:{{ e.border }};box-sizing:border-box"></span>
+<span style="flex:1;width:1.5px;background:#E7DED2"></span>
+</div>
+<div style="padding-bottom:22px;flex:1">
+<div contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="font:600 10.5px/1 Manrope,sans-serif;letter-spacing:.1em;color:#9b8a7c;outline:none">{{ e.date }}</div>
+<div contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="font:500 15px/1.35 Lora,Georgia,serif;color:#2A2320;margin-top:6px;outline:none">{{ e.title }}</div>
+<div contentEditable="{{ true }}" suppressContentEditableWarning="{{ true }}" style="font:400 12.5px/1.5 Manrope,sans-serif;color:#8B7D72;margin-top:4px;outline:none">{{ e.desc }}</div>
+<sc-if value="{{ e.link }}" hint-placeholder-val="{{ false }}">
+<div role="button" onClick="{{ e.openLink }}" style="display:inline-flex;align-items:center;gap:5px;font:600 11.5px/1 Manrope,sans-serif;color:#7B2D3B;margin-top:8px;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:15px">link</span>{{ e.link }}
+</div>
+</sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div role="button" onClick="{{ addEvent }}" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;padding:13px;border-radius:14px;border:1.5px dashed #DCCFBF;color:#6E5241;font:600 12.5px/1 Manrope,sans-serif;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:18px">add</span>Añadir suceso
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSearch }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 18px 100px;animation:tt-fade .28s ease both">
+<div style="display:flex;align-items:center;gap:9px;padding:0 14px;height:48px;border-radius:14px;background:#fff;border:1.5px solid #7B2D3B">
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:#7B2D3B">search</span>
+<input onInput="{{ onQuery }}" placeholder="Busca en capítulos, personajes, notas…" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font:500 14px/1 Manrope,sans-serif;color:#2A2320" />
+<div role="button" onClick="{{ goBack }}" style="cursor:pointer;color:#9b8a7c;display:flex">
+<span style="font-family:'Material Symbols Rounded';font-size:19px">close</span>
+</div>
+</div>
+<div style="font:500 12px/1.4 Manrope,sans-serif;color:#9b8a7c;margin-top:12px">{{ resultLine }}</div>
+
+<div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ resultRows }}" as="r" hint-placeholder-count="3">
+<div role="button" onClick="{{ r.open }}" style="padding:13px 14px;border-radius:14px;background:#fff;border:1px solid #EDE4D8;cursor:pointer" style-active="border-color:#7B2D3B">
+<div style="display:flex;align-items:center;gap:7px">
+<span style="font-family:'Material Symbols Rounded';font-size:16px;color:{{ r.color }}">{{ r.icon }}</span>
+<span style="font:600 12px/1 Manrope,sans-serif;color:{{ r.color }}">{{ r.type }}</span>
+</div>
+<div style="font:500 13.5px/1.4 Lora,Georgia,serif;color:#2A2320;margin-top:7px">{{ r.title }}</div>
+<div style="font:400 12.5px/1.6 Lora,Georgia,serif;color:#8B7D72;margin-top:3px">«{{ r.text }}»</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ fabLibrary }}" hint-placeholder-val="{{ true }}">
+<div role="button" onClick="{{ addProject }}" style="position:absolute;right:18px;bottom:44px;display:flex;align-items:center;gap:8px;padding:15px 20px;border-radius:20px;background:#7B2D3B;color:#FBF7F1;font:600 13.5px/1 Manrope,sans-serif;box-shadow:0 10px 24px rgba(94,31,43,.34);cursor:pointer;z-index:6" style-active="background:#5E1F2B">
+<span style="font-family:'Material Symbols Rounded';font-size:20px">add</span>Nuevo proyecto
+</div>
+</sc-if>
+<sc-if value="{{ fabWrite }}" hint-placeholder-val="{{ false }}">
+<div role="button" onClick="{{ resume }}" style="position:absolute;right:18px;bottom:44px;display:flex;align-items:center;gap:8px;padding:15px 20px;border-radius:20px;background:#7B2D3B;color:#FBF7F1;font:600 13.5px/1 Manrope,sans-serif;box-shadow:0 10px 24px rgba(94,31,43,.34);cursor:pointer;z-index:6" style-active="background:#5E1F2B">
+<span style="font-family:'Material Symbols Rounded';font-size:20px">edit_note</span>Escribir
+</div>
+</sc-if>
+
+<sc-if value="{{ drawer }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:20">
+<div role="button" onClick="{{ closeAll }}" style="position:absolute;inset:0;background:rgba(42,35,32,.42);animation:tt-dim .22s ease both"></div>
+<div style="position:absolute;left:0;top:0;bottom:0;width:308px;background:#FBF7F1;box-shadow:12px 0 40px rgba(42,35,32,.22);display:flex;flex-direction:column;animation:tt-slide .26s cubic-bezier(.2,.8,.2,1) both">
+<div style="padding:22px 18px 16px;background:linear-gradient(155deg,#7B2D3B,#4d1b25);color:#FBF7F1">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="width:34px;height:34px;border-radius:11px;background:rgba(251,247,241,.16);display:flex;align-items:center;justify-content:center;font:600 14px/1 Lora,serif">M</div>
+<div style="flex:1;min-width:0">
+<div style="font:600 13px/1.3 Manrope,sans-serif">Marta Ibáñez</div>
+<div style="font:500 10.5px/1.3 Manrope,sans-serif;color:rgba(251,247,241,.72)">marta@gmail.com</div>
+</div>
+</div>
+<sc-if value="{{ inProject }}" hint-placeholder-val="{{ false }}">
+<div role="button" onClick="{{ openProjects }}" style="margin-top:16px;padding:11px 12px;border-radius:14px;background:rgba(251,247,241,.13);cursor:pointer">
+<div style="font:600 9.5px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(251,247,241,.66)">Proyecto</div>
+<div style="display:flex;align-items:center;gap:8px;margin-top:7px">
+<span style="flex:1;font:500 14px/1.25 Lora,Georgia,serif">{{ projectName }}</span>
+<span style="font-family:'Material Symbols Rounded';font-size:20px">swap_horiz</span>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ notInProject }}" hint-placeholder-val="{{ true }}">
+<div role="button" onClick="{{ resume }}" style="margin-top:16px;padding:11px 12px;border-radius:14px;background:rgba(251,247,241,.13);cursor:pointer">
+<div style="font:600 9.5px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(251,247,241,.66)">Continuar donde lo dejaste</div>
+<div style="display:flex;align-items:center;gap:8px;margin-top:7px">
+<span style="flex:1;font:500 14px/1.25 Lora,Georgia,serif">El jardín de las horas muertas</span>
+<span style="font-family:'Material Symbols Rounded';font-size:20px">arrow_forward</span>
+</div>
+</div>
+</sc-if>
+</div>
+
+<div style="flex:1;min-height:0;overflow-y:auto;padding:12px 10px">
+<div role="button" onClick="{{ goLibrary }}" style="display:flex;align-items:center;gap:13px;padding:12px 12px;border-radius:13px;color:#3f352f;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:21px;color:#6E5241">home_storage</span>
+<span style="font:600 13.5px/1 Manrope,sans-serif">Biblioteca</span>
+</div>
+<sc-if value="{{ inProject }}" hint-placeholder-val="{{ false }}">
+<div>
+<div role="button" onClick="{{ goProject }}" style="display:flex;align-items:center;gap:13px;padding:12px 12px;border-radius:13px;background:rgba(123,45,59,.09);color:#5E1F2B;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:21px;color:#7B2D3B">folder_open</span>
+<span style="font:600 13.5px/1 Manrope,sans-serif">Carpetas del proyecto</span>
+</div>
+<div role="button" onClick="{{ openP1 }}" style="display:flex;align-items:center;gap:13px;padding:12px 12px 12px 24px;border-radius:13px;color:#3f352f;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:19px;color:#9b8a7c">menu_book</span>
+<span style="flex:1;font:500 13px/1 Manrope,sans-serif">Manuscrito</span>
+<span style="font:500 11px/1 Manrope,sans-serif;color:#9b8a7c">{{ chapterTotal }}</span>
+</div>
+<div role="button" onClick="{{ goCharacter }}" style="display:flex;align-items:center;gap:13px;padding:12px 12px 12px 24px;border-radius:13px;color:#3f352f;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:19px;color:#9b8a7c">groups</span>
+<span style="flex:1;font:500 13px/1 Manrope,sans-serif">Personajes</span>
+<span style="font:500 11px/1 Manrope,sans-serif;color:#9b8a7c">{{ charCount }}</span>
+</div>
+<div role="button" onClick="{{ goWorld }}" style="display:flex;align-items:center;gap:13px;padding:12px 12px 12px 24px;border-radius:13px;color:#3f352f;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:19px;color:#9b8a7c">public</span>
+<span style="flex:1;font:500 13px/1 Manrope,sans-serif">Mundo</span>
+<span style="font:500 11px/1 Manrope,sans-serif;color:#9b8a7c">5</span>
+</div>
+<div role="button" onClick="{{ goNotes }}" style="display:flex;align-items:center;gap:13px;padding:12px 12px 12px 24px;border-radius:13px;color:#3f352f;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:19px;color:#9b8a7c">sticky_note_2</span>
+<span style="flex:1;font:500 13px/1 Manrope,sans-serif">Notas sueltas</span>
+<span style="font:500 11px/1 Manrope,sans-serif;color:#9b8a7c">{{ noteCount }}</span>
+</div>
+<div role="button" onClick="{{ goTimeline }}" style="display:flex;align-items:center;gap:13px;padding:12px 12px;border-radius:13px;color:#3f352f;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:21px;color:#6E5241">timeline</span>
+<span style="font:600 13.5px/1 Manrope,sans-serif">Línea temporal</span>
+</div>
+</div>
+</sc-if>
+<div role="button" onClick="{{ openSearch }}" style="display:flex;align-items:center;gap:13px;padding:12px 12px;border-radius:13px;color:#3f352f;cursor:pointer" style-active="background:#F1E9DE">
+<span style="font-family:'Material Symbols Rounded';font-size:21px;color:#6E5241">search</span>
+<span style="font:600 13.5px/1 Manrope,sans-serif">Buscar en todo</span>
+</div>
+
+<div style="margin:14px 10px 0;padding:13px;border-radius:14px;background:#F2F0E6;border:1px solid #E1E3D5">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<span style="font:600 11.5px/1 Manrope,sans-serif;color:#35513F">Objetivo de hoy</span>
+<span style="font:600 11.5px/1 Manrope,sans-serif;color:#6E5241">{{ goalShort }}</span>
+</div>
+<div style="height:6px;border-radius:99px;background:#DDE0D2;margin-top:9px;overflow:hidden">
+<div style="width:64%;height:100%;border-radius:99px;background:#35513F"></div>
+</div>
+</div>
+</div>
+
+<div style="flex:none;padding:12px 14px 16px;border-top:1px solid #EDE4D8">
+<div style="display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:12px;background:#F2F0E6">
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:#35513F">cloud_done</span>
+<div style="flex:1;min-width:0">
+<div style="font:600 11.5px/1.3 Manrope,sans-serif;color:#2A2320">Google Drive</div>
+<div style="font:500 10.5px/1.3 Manrope,sans-serif;color:#8B7D72">Tinta / Proyectos · al día</div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:13px;padding:12px 8px;color:#3f352f;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:#9b8a7c">settings</span>
+<span style="font:500 13px/1 Manrope,sans-serif">Ajustes</span>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sheetProjects }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:30">
+<div role="button" onClick="{{ closeAll }}" style="position:absolute;inset:0;background:rgba(42,35,32,.42);animation:tt-dim .22s ease both"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;background:#FBF7F1;border-radius:26px 26px 0 0;padding:10px 0 26px;animation:tt-up .28s cubic-bezier(.2,.8,.2,1) both">
+<div style="width:38px;height:4px;border-radius:99px;background:#E0D6C8;margin:0 auto 14px"></div>
+<div style="padding:0 18px 10px;font:600 11.5px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9b8a7c">Cambiar de proyecto</div>
+<sc-for list="{{ projectSheetRows }}" as="p" hint-placeholder-count="3">
+<div role="button" onClick="{{ p.open }}" style="display:flex;align-items:center;gap:12px;padding:13px 18px;background:{{ p.rowBg }};cursor:pointer" style-active="background:#F5EFE6">
+<div style="width:34px;height:34px;flex:none;border-radius:10px;background:linear-gradient(150deg,{{ p.c1 }},{{ p.c2 }})"></div>
+<div style="flex:1;min-width:0">
+<div style="font:500 14px/1.3 Lora,Georgia,serif;color:#2A2320">{{ p.name }}</div>
+<div style="font:500 11px/1.3 Manrope,sans-serif;color:#9b8a7c">{{ p.meta }}</div>
+</div>
+<sc-if value="{{ p.current }}" hint-placeholder-val="{{ false }}">
+<span style="font-family:'Material Symbols Rounded';font-size:20px;color:#7B2D3B">check</span>
+</sc-if>
+</div>
+</sc-for>
+<div role="button" onClick="{{ addProject }}" style="display:flex;align-items:center;gap:12px;padding:15px 18px 6px;color:#7B2D3B;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:21px">add_circle</span>
+<span style="font:600 13.5px/1 Manrope,sans-serif">Nuevo proyecto en Drive</span>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sheetTypo }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:30">
+<div role="button" onClick="{{ closeAll }}" style="position:absolute;inset:0;background:rgba(42,35,32,.34);animation:tt-dim .22s ease both"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;background:#FBF7F1;border-radius:26px 26px 0 0;padding:10px 18px 26px;animation:tt-up .28s cubic-bezier(.2,.8,.2,1) both">
+<div style="width:38px;height:4px;border-radius:99px;background:#E0D6C8;margin:0 auto 16px"></div>
+<div style="display:flex;align-items:center;justify-content:space-between">
+<span style="font:600 11.5px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9b8a7c">Tipografía</span>
+<div role="button" onClick="{{ closeAll }}" style="color:#7B2D3B;font:600 12.5px/1 Manrope,sans-serif;cursor:pointer">Listo</div>
+</div>
+
+<div style="display:flex;gap:9px;margin-top:14px">
+<div role="button" onClick="{{ fontLora }}" style="flex:1;padding:12px 8px;border-radius:14px;border:1.5px solid #E4D9CC;background:#fff;text-align:center;cursor:pointer">
+<div style="font:400 20px/1 Lora,Georgia,serif;color:#2A2320">Aa</div>
+<div style="font:600 10.5px/1 Manrope,sans-serif;color:#8B7D72;margin-top:7px">Lora</div>
+</div>
+<div role="button" onClick="{{ fontManrope }}" style="flex:1;padding:12px 8px;border-radius:14px;border:1.5px solid #E4D9CC;background:#fff;text-align:center;cursor:pointer">
+<div style="font:500 20px/1 Manrope,sans-serif;color:#2A2320">Aa</div>
+<div style="font:600 10.5px/1 Manrope,sans-serif;color:#8B7D72;margin-top:7px">Manrope</div>
+</div>
+<div role="button" onClick="{{ fontCourier }}" style="flex:1;padding:12px 8px;border-radius:14px;border:1.5px solid #E4D9CC;background:#fff;text-align:center;cursor:pointer">
+<div style="font:400 19px/1 'Courier Prime',monospace;color:#2A2320">Aa</div>
+<div style="font:600 10.5px/1 Manrope,sans-serif;color:#8B7D72;margin-top:7px">Máquina</div>
+</div>
+</div>
+<div style="font:500 11.5px/1 Manrope,sans-serif;color:#9b8a7c;margin-top:9px;text-align:center">Fuente actual: {{ fontLabel }}</div>
+
+<div style="margin-top:18px">
+<div style="display:flex;align-items:center;justify-content:space-between;font:600 12px/1 Manrope,sans-serif;color:#3f352f">
+<span>Tamaño</span><span style="color:#9b8a7c">{{ sizeLabel }}</span>
+</div>
+<div style="display:flex;align-items:center;gap:12px;margin-top:10px">
+<div role="button" onClick="{{ sizeDown }}" style="width:44px;height:44px;flex:none;border-radius:13px;background:#F1E9DE;display:flex;align-items:center;justify-content:center;color:#5E1F2B;font:500 14px/1 Lora,serif;cursor:pointer">A</div>
+<div style="flex:1;height:6px;border-radius:99px;background:#EFE7DB;position:relative">
+<div ref="{{ sizeBarRef }}" style="position:absolute;left:0;top:0;bottom:0;width:40%;border-radius:99px;background:#7B2D3B"></div>
+</div>
+<div role="button" onClick="{{ sizeUp }}" style="width:44px;height:44px;flex:none;border-radius:13px;background:#F1E9DE;display:flex;align-items:center;justify-content:center;color:#5E1F2B;font:500 22px/1 Lora,serif;cursor:pointer">A</div>
+</div>
+</div>
+
+<div style="margin-top:18px">
+<div style="font:600 12px/1 Manrope,sans-serif;color:#3f352f">Interlineado</div>
+<div style="display:flex;gap:9px;margin-top:10px">
+<div role="button" onClick="{{ lhTight }}" style="flex:1;height:44px;border-radius:13px;background:#fff;border:1.5px solid #E4D9CC;display:flex;align-items:center;justify-content:center;gap:6px;color:#3f352f;font:600 12px/1 Manrope,sans-serif;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:18px;color:#6E5241">density_small</span>Justo
+</div>
+<div role="button" onClick="{{ lhNormal }}" style="flex:1;height:44px;border-radius:13px;background:#fff;border:1.5px solid #E4D9CC;display:flex;align-items:center;justify-content:center;gap:6px;color:#3f352f;font:600 12px/1 Manrope,sans-serif;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:18px;color:#6E5241">density_medium</span>Normal
+</div>
+<div role="button" onClick="{{ lhLoose }}" style="flex:1;height:44px;border-radius:13px;background:#fff;border:1.5px solid #E4D9CC;display:flex;align-items:center;justify-content:center;gap:6px;color:#3f352f;font:600 12px/1 Manrope,sans-serif;cursor:pointer">
+<span style="font-family:'Material Symbols Rounded';font-size:18px;color:#6E5241">density_large</span>Aire
+</div>
+</div>
+</div>
+
+<div style="margin-top:18px;display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border-radius:14px;background:#F2F0E6;border:1px solid #E1E3D5">
+<div>
+<div style="font:600 12.5px/1 Manrope,sans-serif;color:#2A2320">Ancho de página completo</div>
+<div style="font:500 11px/1.3 Manrope,sans-serif;color:#8B7D72;margin-top:4px">{{ widthLabel }}</div>
+</div>
+<div role="button" onClick="{{ toggleWide }}" style="width:50px;height:30px;flex:none;border-radius:99px;background:#DDE0D2;position:relative;cursor:pointer">
+<div ref="{{ knobRef }}" style="position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .18s ease"></div>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<div style="flex:none;height:22px;display:flex;align-items:center;justify-content:center;background:#FBF7F1">
+<div style="width:104px;height:4px;border-radius:99px;background:#2A2320;opacity:.32"></div>
+</div>
+
+</div>
+</div>
+
+<div style="max-width:430px;font:400 11.5px/1.65 Manrope,sans-serif;color:#9b8a7c;text-align:center;text-wrap:pretty">
+Todo tiene camino: crea proyectos, carpetas, capítulos, fichas, reglas del mundo, notas y sucesos de la línea temporal. Los textos de fichas, mundo y línea temporal se editan tocándolos.
+</div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:1010},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;library&quot;,&quot;project&quot;,&quot;chapters&quot;,&quot;editor&quot;,&quot;character&quot;,&quot;world&quot;,&quot;notes&quot;,&quot;timeline&quot;,&quot;search&quot;],&quot;default&quot;:&quot;library&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototipo&quot;},&quot;showDrawer&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototipo&quot;},&quot;focusMode&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Editor&quot;},&quot;wordGoal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:500,&quot;min&quot;:100,&quot;max&quot;:3000,&quot;step&quot;:100,&quot;unit&quot;:&quot;palabras&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Editor&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const start = props.startScreen || 'library';
+    this.state = {
+      screen: start,
+      inProject: start !== 'library',
+      drawer: !!props.showDrawer,
+      sheet: null,
+      manOpen: true, perOpen: false,
+      font: 'Lora', size: 18, lh: 1.75, wide: false, align: 'left',
+      focus: !!props.focusMode,
+      projectName: 'El jardín de las horas muertas',
+      projectMeta: 'Novela · 42.180 palabras',
+      folderKey: 'p1',
+      currentChapter: '3. El nombre de Adela',
+      isProse: true,
+      query: '',
+      projects: [
+        { name: 'El jardín de las horas muertas', meta: '12 capítulos · 42.180 palabras', fullMeta: 'Novela · 42.180 palabras', genre: 'novela', c1: '#7B2D3B', c2: '#5E1F2B', bar: '#7B2D3B', pct: '58%' },
+        { name: 'Cartas al faro', meta: '7 relatos · 12.940 palabras', fullMeta: 'Relatos · 12.940 palabras', genre: 'relatos', c1: '#3f5c48', c2: '#2b4234', bar: '#35513F', pct: '34%' },
+        { name: 'Raíz amarga', meta: 'Idea suelta · 3.120 palabras', fullMeta: 'Borrador · 3.120 palabras', genre: 'borrador', c1: '#7d5f4a', c2: '#5b4334', bar: '#6E5241', pct: '12%' }
+      ],
+      p1: [
+        { n: '1', title: 'La casa que no dormía', status: 'Listo', words: '3.140' },
+        { n: '2', title: 'Cartas sin remite', status: 'Revisado', words: '2.870' },
+        { n: '3', title: 'El nombre de Adela', status: 'Escribiendo ahora', words: '4.210' },
+        { n: '4', title: 'Lo que la niebla trajo', status: 'Borrador', words: '1.980' }
+      ],
+      p2: [
+        { n: '5', title: 'La grieta del pozo', status: 'Borrador', words: '2.310' },
+        { n: '6', title: 'Doña Elvira reconoce la cicatriz', status: 'Revisado', words: '3.880' },
+        { n: '7', title: 'Lo que se dijo en la fonda', status: 'Borrador', words: '1.640' },
+        { n: '8', title: 'El pozo, por dentro', status: 'Borrador', words: '900' },
+        { n: '9', title: 'Marc pregunta dos veces', status: 'Listo', words: '2.740' }
+      ],
+      characters: [
+        { ini: 'AR', name: 'Adela Rivas', role: 'Protagonista' },
+        { ini: 'TV', name: 'Tomás Vega', role: 'Hermano de leche' },
+        { ini: 'DE', name: 'Doña Elvira', role: 'Antagonista' }
+      ],
+      charName: 'Adela Rivas', charRole: 'Protagonista',
+      arcs: [
+        { title: 'Miente para sobrevivir', sub: 'Capítulos 1 – 4', state: 'done' },
+        { title: 'La descubren y elige quedarse', sub: 'Capítulos 5 – 9', state: 'now' },
+        { title: 'Dice su nombre en voz alta', sub: 'Por escribir', state: 'todo' }
+      ],
+      relations: [
+        { ini: 'TV', name: 'Tomás Vega', role: 'Hermano de leche · la protege' },
+        { ini: 'DE', name: 'Doña Elvira', role: 'Sabe quién es · la calla' },
+        { ini: 'MC', name: 'Marc Cebrián', role: 'Interés amoroso · desconfía' }
+      ],
+      tags: [
+        { label: 'Geografía', bg: 'rgba(53,81,63,.10)', color: '#35513F' },
+        { label: 'Mitología', bg: 'rgba(110,82,65,.10)', color: '#6E5241' }
+      ],
+      rules: [
+        'Solo devuelve lo que alguien sigue echando de menos.',
+        'Lo devuelto no dura más de una noche.',
+        'Nadie habla de lo que le devolvió.'
+      ],
+      notes: [
+        { text: '¿Y si la niebla no devuelve, sino que cobra?', when: 'Hace 2 días' },
+        { text: 'El título debería decirlo Tomás en voz alta en la parte II.', when: 'La semana pasada' },
+        { text: 'Buscar cómo funcionaban las casas de acogida en los 80.', when: 'Hace un mes' }
+      ],
+      events: [
+        { date: '1989 · INVIERNO', title: 'El incendio de la casa de acogida', desc: 'Adela tiene once años. Sale del pueblo esa misma noche.', dot: '#6E5241', link: null },
+        { date: '2012 · OCTUBRE', title: 'Adela vuelve con la niebla', desc: 'Nadie la reconoce, salvo una persona.', dot: '#35513F', link: 'Capítulo 3' },
+        { date: '2012 · NOVIEMBRE', title: 'Doña Elvira reconoce la cicatriz', desc: 'Y decide callar, de momento.', dot: '#7B2D3B', link: 'Capítulo 6' },
+        { date: 'SIN FECHA', title: 'La grieta del pozo (¿parte II?)', desc: 'Toca para escribir qué pasa aquí.', dot: null, link: null }
+      ],
+      extras: []
+    };
+    this.editorRef = React.createRef();
+    this.countRef = React.createRef();
+    this.knobRef = React.createRef();
+    this.sizeBarRef = React.createRef();
+  }
+
+  componentDidMount() { this.applyTypo(); }
+  componentDidUpdate() { this.applyTypo(); }
+
+  applyTypo() {
+    const el = this.editorRef.current;
+    if (el) {
+      const fams = { Lora: 'Lora, Georgia, serif', Manrope: 'Manrope, system-ui, sans-serif', Courier: "'Courier Prime', ui-monospace, monospace" };
+      el.style.fontFamily = fams[this.state.font];
+      el.style.fontSize = this.state.size + 'px';
+      el.style.lineHeight = String(this.state.lh);
+      el.style.textAlign = this.state.align;
+      el.style.paddingLeft = this.state.wide ? '14px' : '34px';
+      el.style.paddingRight = this.state.wide ? '14px' : '34px';
+      el.style.scrollbarWidth = 'none';
+    }
+    if (this.knobRef.current) {
+      this.knobRef.current.style.transform = this.state.wide ? 'translateX(20px)' : 'none';
+      this.knobRef.current.parentElement.style.background = this.state.wide ? '#35513F' : '#DDE0D2';
+    }
+    if (this.sizeBarRef.current) {
+      const pct = ((this.state.size - 14) / (26 - 14)) * 100;
+      this.sizeBarRef.current.style.width = Math.max(8, Math.min(100, pct)) + '%';
+    }
+  }
+
+  go(screen, extra) { this.setState(Object.assign({ screen, drawer: false, sheet: null }, extra || {})); }
+  exec(cmd, val) {
+    const el = this.editorRef.current;
+    if (el) el.focus();
+    try { document.execCommand(cmd, false, val || null); } catch (e) { }
+    this.recount();
+  }
+  recount() {
+    const el = this.editorRef.current, c = this.countRef.current;
+    if (!el || !c) return;
+    const n = (el.innerText.trim().match(/\S+/g) || []).length;
+    c.textContent = n.toLocaleString('es-ES') + ' palabras · ' + Math.max(1, Math.round(n / 200)) + ' min';
+  }
+  openChapter(c) {
+    this.go('editor', { currentChapter: c.n + '. ' + c.title, isProse: c.n === '3', inProject: true });
+  }
+  statusView(c) {
+    const dots = { 'Listo': '#35513F', 'Revisado': '#6E5241', 'Borrador': '#D8C9B6', 'Escribiendo ahora': '#7B2D3B' };
+    const active = c.status === 'Escribiendo ahora';
+    return {
+      n: c.n, title: c.title,
+      meta: c.status + ' · ' + c.words + ' palabras',
+      dot: dots[c.status] || '#D8C9B6',
+      border: active ? '#7B2D3B' : '#EDE4D8',
+      shadow: active ? '0 2px 10px rgba(123,45,59,.10)' : 'none',
+      numColor: active ? '#7B2D3B' : '#D8C9B6',
+      metaColor: active ? '#7B2D3B' : '#9b8a7c',
+      icon: active ? 'edit' : 'drag_indicator',
+      iconColor: active ? '#7B2D3B' : '#d4c8ba',
+      open: () => this.openChapter(c)
+    };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const goal = this.props.wordGoal ?? 500;
+    const fontLabels = { Lora: 'Lora — serif literaria', Manrope: 'Manrope — sans limpia', Courier: 'Courier — máquina de escribir' };
+    const chaps = s.folderKey === 'p1' ? s.p1 : s.p2;
+    const folderTitle = s.folderKey === 'p1' ? 'Parte I — El invierno' : 'Parte II — La grieta';
+    const sumWords = (arr) => arr.reduce((t, c) => t + (parseInt(c.words.replace('.', ''), 10) || 0), 0).toLocaleString('es-ES');
+    const corpus = [
+      { type: 'Capítulo', color: '#7B2D3B', icon: 'description', title: '3. El nombre de Adela', text: 'el mismo día que la niebla, y durante años nadie fue capaz…', go: () => this.openChapter(s.p1[2]) },
+      { type: 'Capítulo', color: '#7B2D3B', icon: 'description', title: '4. Lo que la niebla trajo', text: 'la niebla bajó antes de tiempo aquel jueves…', go: () => this.openChapter(s.p1[3]) },
+      { type: 'Mundo', color: '#35513F', icon: 'public', title: 'La niebla de Valdeserena', text: 'no es meteorología: la niebla devuelve cosas…', go: () => this.go('world', { inProject: true }) },
+      { type: 'Personaje', color: '#6E5241', icon: 'face', title: 'Adela Rivas', text: 'volvió con la niebla veintitrés años después…', go: () => this.go('character', { inProject: true }) },
+      { type: 'Nota', color: '#6E5241', icon: 'sticky_note_2', title: 'Notas sueltas', text: '¿y si la niebla no devuelve, sino que cobra?', go: () => this.go('notes', { inProject: true }) }
+    ];
+    const q = s.query.trim().toLowerCase();
+    const results = q ? corpus.filter(r => (r.title + ' ' + r.text).toLowerCase().includes(q)) : corpus;
+    return {
+      isLibrary: s.screen === 'library', isProject: s.screen === 'project', isChapters: s.screen === 'chapters',
+      isEditor: s.screen === 'editor', isCharacter: s.screen === 'character', isWorld: s.screen === 'world',
+      isNotes: s.screen === 'notes', isTimeline: s.screen === 'timeline', isSearch: s.screen === 'search',
+      inProject: s.inProject, notInProject: !s.inProject, inLibraryBar: !s.inProject,
+      fabLibrary: s.screen === 'library',
+      fabWrite: s.screen === 'character' || s.screen === 'world' || s.screen === 'timeline' || s.screen === 'notes',
+      chrome: !s.focus, focus: s.focus,
+      prose: s.isProse, blank: !s.isProse,
+      drawer: s.drawer, sheetProjects: s.sheet === 'projects', sheetTypo: s.sheet === 'typo',
+      manOpen: s.manOpen, perOpen: s.perOpen,
+      manChevron: s.manOpen ? 'expand_less' : 'expand_more',
+      perChevron: s.perOpen ? 'expand_less' : 'expand_more',
+      projectName: s.projectName, projectMeta: s.projectMeta,
+      projectInitial: (s.projectName || 'P').trim().charAt(0).toUpperCase(),
+      projectCountLine: s.projects.length + ' proyectos · todo se guarda solo en tu Drive',
+      goalLine: Math.round(goal * 0.64).toLocaleString('es-ES') + ' de ' + goal.toLocaleString('es-ES') + ' palabras',
+      goalShort: Math.round(goal * 0.64) + ' / ' + goal,
+      chapterTotal: s.p1.length + s.p2.length,
+      charCount: s.characters.length, noteCount: s.notes.length,
+      p1Meta: s.p1.length + ' capítulos · ' + sumWords(s.p1) + ' palabras',
+      p2Meta: s.p2.length + ' capítulos · ' + sumWords(s.p2) + ' palabras',
+      folderTitle, folderMeta: chaps.length + ' capítulos · ' + sumWords(chaps) + ' palabras',
+      currentChapter: s.currentChapter,
+      charName: s.charName, charRole: s.charRole,
+      fontLabel: fontLabels[s.font], sizeLabel: s.size + ' px',
+      widthLabel: s.wide ? 'Ocupa toda la pantalla' : 'Márgenes de lectura cómoda',
+      alignIcon: s.align === 'left' ? 'format_align_left' : (s.align === 'center' ? 'format_align_center' : 'format_align_justify'),
+      resultLine: q ? results.length + (results.length === 1 ? ' resultado para «' : ' resultados para «') + s.query.trim() + '»' : 'Todo el proyecto · escribe para filtrar',
+      editorRef: this.editorRef, countRef: this.countRef, knobRef: this.knobRef, sizeBarRef: this.sizeBarRef,
+      projectRows: s.projects.map(p => ({ ...p, open: () => this.go('project', { inProject: true, projectName: p.name, projectMeta: p.fullMeta }) })),
+      projectSheetRows: s.projects.map(p => ({
+        ...p, current: p.name === s.projectName && s.inProject,
+        rowBg: (p.name === s.projectName && s.inProject) ? 'rgba(123,45,59,.07)' : 'transparent',
+        open: () => this.go('project', { inProject: true, projectName: p.name, projectMeta: p.fullMeta })
+      })),
+      chapterRows: chaps.map(c => this.statusView(c)),
+      charRows: s.characters.map(ch => ({ ...ch, open: () => this.go('character', { inProject: true, charName: ch.name, charRole: ch.role }) })),
+      arcRows: s.arcs.map((a, i) => ({
+        title: a.title, sub: a.sub,
+        bg: a.state === 'done' ? '#35513F' : (a.state === 'now' ? '#7B2D3B' : 'transparent'),
+        border: a.state === 'todo' ? '1.5px solid #D8C9B6' : 'none',
+        line: i === s.arcs.length - 1 ? 'transparent' : '#DDE0D2',
+        titleColor: a.state === 'todo' ? '#9b8a7c' : '#2A2320'
+      })),
+      relationRows: s.relations,
+      tagRows: s.tags,
+      ruleRows: s.rules.map((r, i) => ({ n: i + 1, text: r })),
+      noteRows: s.notes,
+      eventRows: s.events.map(e => ({
+        date: e.date, title: e.title, desc: e.desc, link: e.link,
+        bg: e.dot || 'transparent',
+        border: e.dot ? 'none' : '1.5px dashed #C9BAAA',
+        openLink: () => this.openChapter(e.link === 'Capítulo 6' ? this.state.p2[1] : this.state.p1[2])
+      })),
+      extraRows: s.extras,
+      resultRows: results.map(r => ({ ...r, open: r.go })),
+      openDrawer: () => this.setState({ drawer: true }),
+      closeAll: () => this.setState({ drawer: false, sheet: null }),
+      openProjects: () => this.setState({ sheet: 'projects', drawer: false }),
+      openTypo: () => this.setState({ sheet: 'typo' }),
+      openSearch: () => this.go('search', { query: '' }),
+      goBack: () => this.go(s.inProject ? 'project' : 'library'),
+      goLibrary: () => this.go('library', { inProject: false }),
+      goProject: () => this.go('project', { inProject: true }),
+      goChapters: () => this.go('chapters'),
+      goCharacter: () => this.go('character', { charName: 'Adela Rivas', charRole: 'Protagonista' }),
+      goWorld: () => this.go('world'),
+      goNotes: () => this.go('notes'),
+      goTimeline: () => this.go('timeline'),
+      openP1: () => this.go('chapters', { folderKey: 'p1', inProject: true }),
+      openP2: () => this.go('chapters', { folderKey: 'p2', inProject: true }),
+      openCh3: () => this.openChapter(s.p1[2]),
+      openCh4: () => this.openChapter(s.p1[3]),
+      resume: () => this.go('editor', { inProject: true, projectName: 'El jardín de las horas muertas', projectMeta: 'Novela · 42.180 palabras', currentChapter: '3. El nombre de Adela', isProse: true }),
+      toggleMan: () => this.setState(p => ({ manOpen: !p.manOpen })),
+      togglePer: () => this.setState(p => ({ perOpen: !p.perOpen })),
+      toggleFocus: () => this.setState(p => ({ focus: !p.focus })),
+      toggleWide: () => this.setState(p => ({ wide: !p.wide })),
+      bold: () => this.exec('bold'), italic: () => this.exec('italic'), underline: () => this.exec('underline'),
+      heading: () => this.exec('formatBlock', '<h3>'),
+      undo: () => this.exec('undo'), redo: () => this.exec('redo'),
+      insertScene: () => this.exec('insertHTML', '<p style="text-align:center;color:#c0b2a3;letter-spacing:.5em;margin:28px 0">✦ ✦ ✦</p><p><br></p>'),
+      cycleAlign: () => this.setState(p => ({ align: p.align === 'left' ? 'center' : (p.align === 'center' ? 'justify' : 'left') })),
+      recount: () => this.recount(),
+      onQuery: (ev) => this.setState({ query: ev.target.value }),
+      fontLora: () => this.setState({ font: 'Lora' }),
+      fontManrope: () => this.setState({ font: 'Manrope' }),
+      fontCourier: () => this.setState({ font: 'Courier' }),
+      sizeUp: () => this.setState(p => ({ size: Math.min(26, p.size + 2) })),
+      sizeDown: () => this.setState(p => ({ size: Math.max(14, p.size - 2) })),
+      lhTight: () => this.setState({ lh: 1.45 }),
+      lhNormal: () => this.setState({ lh: 1.75 }),
+      lhLoose: () => this.setState({ lh: 2.1 }),
+      addProject: () => this.setState(p => ({
+        sheet: null,
+        projects: [...p.projects, { name: 'Proyecto sin título', meta: 'Vacío · 0 palabras', fullMeta: 'Nuevo · 0 palabras', genre: 'nuevo', c1: '#6E5241', c2: '#4a382b', bar: '#6E5241', pct: '2%' }]
+      })),
+      addChapter: () => this.setState(p => {
+        const key = p.folderKey, list = p[key];
+        const nextN = String(p.p1.length + p.p2.length + 1);
+        return { [key]: [...list, { n: nextN, title: 'Capítulo sin título', status: 'Borrador', words: '0' }] };
+      }),
+      addCharacter: () => this.setState(p => ({ characters: [...p.characters, { ini: '·', name: 'Personaje sin nombre', role: 'Toca su ficha para escribirla' }] })),
+      addRelation: () => this.setState(p => ({ relations: [...p.relations, { ini: '+', name: 'Nombre del personaje', role: 'Toca para escribir cómo se relacionan' }] })),
+      addArc: () => this.setState(p => ({ arcs: [...p.arcs, { title: 'Nuevo hito', sub: 'Toca para describirlo', state: 'todo' }] })),
+      addTag: () => this.setState(p => ({ tags: [...p.tags, { label: 'Etiqueta', bg: '#F1E9DE', color: '#6E5241' }] })),
+      addRule: () => this.setState(p => ({ rules: [...p.rules, 'Toca para escribir la regla.'] })),
+      addNote: () => this.setState(p => ({ notes: [{ text: 'Toca para escribir la idea…', when: 'Ahora mismo' }, ...p.notes] })),
+      addEvent: () => this.setState(p => ({ events: [...p.events, { date: 'SIN FECHA', title: 'Nuevo suceso', desc: 'Toca para escribir qué pasa aquí.', dot: null, link: null }] })),
+      addFolder: () => this.setState(p => ({ extras: [{ icon: 'folder', name: 'Carpeta nueva', hint: 'Vacía · toca el nombre para renombrarla', isDoc: false }, ...p.extras] })),
+      addDoc: () => this.setState(p => ({ extras: [{ icon: 'description', name: 'Documento nuevo', hint: 'Toca el lápiz para escribir en él', isDoc: true, open: () => this.go('editor', { currentChapter: 'Documento nuevo', isProse: false, inProject: true }) }, ...p.extras] }))
+    };
+  }
+}
+</script>
+</body>
+</html>

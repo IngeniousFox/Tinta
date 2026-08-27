@@ -18,6 +18,11 @@ export function Icon({
 }) {
   return (
     <Text
+      // El "texto" es el nombre de la ligadura («cloud_done»): un lector de
+      // pantalla lo leería tal cual. El sentido lo pone el accessibilityLabel
+      // del botón que envuelve al icono, nunca el glifo.
+      accessible={false}
+      importantForAccessibility="no"
       allowFontScaling={false}
       style={[
         {

@@ -17,6 +17,21 @@ export const shadow = {
   chapterActive: '0px 2px 10px rgba(123, 45, 59, 0.10)',
 } as const;
 
+/**
+ * Colores que no pueden ser una clase de Tailwind porque viajan por `style` o
+ * como prop de `<Icon color>`. Están aquí y no tecleados en cada pantalla
+ * porque el mismo rosa de «zona peligrosa» estaba copiado con dos valores
+ * distintos y ya había divergido.
+ */
+export const borde = {
+  /** Todo lo que borra sin vuelta atrás: «Borrar todo», «Borrar parte»… */
+  peligro: '#d8b8be',
+  /** Chip o tarjeta elegida. */
+  seleccion: '#7B2D3B',
+  /** Chip o tarjeta sin elegir. */
+  neutro: '#E4D9CC',
+} as const;
+
 /** Gradientes: [inicio, fin]. */
 export const gradient = {
   drawerHeader: ['#7B2D3B', '#4d1b25'],
@@ -28,6 +43,8 @@ export const gradient = {
 export const lomo = {
   novela: { c1: '#7B2D3B', c2: '#5E1F2B', bar: '#7B2D3B' },
   relatos: { c1: '#3f5c48', c2: '#2b4234', bar: '#35513F' },
+  /** Añil de tinta: distinto de los demás a primera vista y sigue siendo cálido. */
+  poemario: { c1: '#4a5270', c2: '#313752', bar: '#4a5270' },
   borrador: { c1: '#7d5f4a', c2: '#5b4334', bar: '#6E5241' },
   nuevo: { c1: '#6E5241', c2: '#4a382b', bar: '#6E5241' },
 } as const;

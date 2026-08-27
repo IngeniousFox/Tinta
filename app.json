@@ -33,11 +33,27 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      "expo-asset",
+      "@react-native-google-signin/google-signin",
+      "expo-sharing"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "owner": "andress17",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "63937611-99fd-4a85-9221-d709079243e9"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/63937611-99fd-4a85-9221-d709079243e9"
     }
   }
 }
