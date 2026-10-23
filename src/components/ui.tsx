@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import type { ReactNode } from 'react';
 import { Pressable, Text, View, type StyleProp, type ViewStyle } from 'react-native';
@@ -94,19 +95,52 @@ export function EnlaceVolver({ etiqueta, onPress }: { etiqueta: string; onPress:
 /**
  * Lomo de libro. El `inset box-shadow` por la izquierda es lo que lo hace
  * parecer un lomo y no un rectángulo: sin esa franja, la metáfora se cae.
+ *
+ * Con `portada` (uri de una imagen elegida por la usuaria) se pinta esa imagen
+ * en vez del degradado del género, con la misma forma y la misma franja.
  */
 export function Lomo({
   genero,
   ancho = 52,
   alto = 70,
   etiqueta,
+  portada,
+  version,
 }: {
   genero: LomoKey;
   ancho?: number;
   alto?: number;
   etiqueta?: string;
+  portada?: string | null;
+  /** Cambia cuando cambia la portada: la ruta es la misma y la caché mentiría. */
+  version?: string;
 }) {
   const c = lomo[genero];
+  if (portada) {
+    const forma = {
+      width: ancho,
+      height: alto,
+      borderTopLeftRadius: 5,
+      borderBottomLeftRadius: 5,
+      borderTopRightRadius: 10,
+      borderBottomRightRadius: 10,
+    };
+    return (
+      <View style={[forma, { overflow: 'hidden', backgroundColor: c.c2 }]}>
+        <Image
+          key={`${portada}-${version ?? ''}`}
+          source={{ uri: portada }}
+          style={{ width: '100%', height: '100%' }}
+          contentFit="cover"
+          transition={180}
+        />
+        <View
+          pointerEvents="none"
+          style={[forma, { position: 'absolute', top: 0, left: 0, boxShadow: LOMO_INNER_SHADOW }]}
+        />
+      </View>
+    );
+  }
   return (
     <LinearGradient
       colors={[c.c1, c.c2]}

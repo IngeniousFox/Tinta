@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icon } from '@/components/Icon';
 import { Pantalla } from '@/components/Chrome';
+import { uriPortada, usePortada } from '@/components/usePortada';
 import { AnilloObjetivo, BarraProgreso, LabelSeccion, Lomo, Tarjeta } from '@/components/ui';
 import {
   useActividad,
@@ -204,6 +205,7 @@ function FilaProyecto({ manifiesto }: { manifiesto: Manifiesto }) {
   const router = useRouter();
   const { data: proyecto } = useProyecto(manifiesto.nombre);
   const borrar = useBorrarProyecto();
+  const portada = usePortada(manifiesto);
 
   const palabras = proyecto ? palabrasDeProyecto(proyecto) : 0;
   const pct = proyecto ? progresoProyecto(proyecto) : 0;
@@ -219,6 +221,7 @@ function FilaProyecto({ manifiesto }: { manifiesto: Manifiesto }) {
   const confirmarBorrado = () => {
     Alert.alert(`«${manifiesto.nombre}»`, '¿Qué quieres hacer con este proyecto?', [
       { text: 'Nada, cerrar', style: 'cancel' },
+      { text: manifiesto.portada ? 'Portada…' : 'Poner portada', onPress: portada.menu },
       {
         text: 'Borrarlo…',
         style: 'destructive',
@@ -247,7 +250,12 @@ function FilaProyecto({ manifiesto }: { manifiesto: Manifiesto }) {
       className="flex-row gap-3.5 rounded-[18px] border border-borde bg-papel-card p-3.5"
       style={{ boxShadow: shadow.card }}
     >
-      <Lomo genero={manifiesto.genero} etiqueta={etiquetaGenero(manifiesto.genero).toLowerCase()} />
+      <Lomo
+        genero={manifiesto.genero}
+        etiqueta={etiquetaGenero(manifiesto.genero).toLowerCase()}
+        portada={uriPortada(manifiesto)}
+        version={manifiesto.modificado}
+      />
       <View className="min-w-0 flex-1 justify-center gap-[7px]">
         <Text numberOfLines={2} className="font-lora-medium text-[15.5px] text-tinta">
           {manifiesto.nombre}

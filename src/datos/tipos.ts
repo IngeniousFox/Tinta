@@ -32,6 +32,12 @@ export type Manifiesto = {
   genero: GeneroProyecto;
   /** Orden de las carpetas en la pantalla de proyecto. */
   ordenCarpetas: string[];
+  /**
+   * Ruta relativa de la portada elegida por la usuaria (`portada.jpg`), o null
+   * para pintar el lomo por defecto del género. Igual que con las fotos de
+   * personaje, se guarda la ruta y no la imagen.
+   */
+  portada: string | null;
   creado: string;
   modificado: string;
 };

@@ -40,6 +40,7 @@ function proyecto(manuscrito: Carpeta[]): Proyecto {
       nombre: 'La casa del acantilado',
       genero: 'novela',
       ordenCarpetas: [],
+      portada: null,
       creado: '2026-08-21T00:00:00.000Z',
       modificado: '2026-08-21T00:00:00.000Z',
     },

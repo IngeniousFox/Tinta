@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query';
+import type { File } from 'expo-file-system';
 
 import { leerActividad } from './actividad';
 import { type Ajustes, guardarAjustes, leerAjustes } from './ajustes';
@@ -17,9 +18,11 @@ import {
   guardarNotaMundo,
   guardarNotaSuelta,
   guardarPersonaje,
+  guardarPortada,
   inicializar,
   leerProyecto,
   listarProyectos,
+  quitarPortada,
   renombrarParte,
   renombrarProyecto,
 } from './almacen';
@@ -166,6 +169,19 @@ export function useRenombrarProyecto() {
       cliente.removeQueries({ queryKey: claves.proyecto(v.viejo) });
       invalidarProyecto(cliente, m.nombre);
     },
+  });
+}
+
+/**
+ * Pone (con un fichero) o quita (con null) la portada de un proyecto.
+ * Una sola mutación para las dos cosas: invalidan exactamente lo mismo.
+ */
+export function useCambiarPortada() {
+  const cliente = useQueryClient();
+  return useMutation({
+    mutationFn: async (v: { proyecto: string; origen: File | null }) =>
+      v.origen ? guardarPortada(v.proyecto, v.origen) : quitarPortada(v.proyecto),
+    onSuccess: (_m, v) => invalidarProyecto(cliente, v.proyecto),
   });
 }
 

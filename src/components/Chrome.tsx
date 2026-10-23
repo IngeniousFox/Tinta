@@ -16,6 +16,7 @@ import { gradient, shadow } from '@/theme/tokens';
 
 import { Icon } from './Icon';
 import { BarraProgreso, Lomo } from './ui';
+import { uriPortada } from './usePortada';
 
 const ANCHO_DRAWER = 308;
 
@@ -439,7 +440,13 @@ function SelectorProyecto({
                 className="flex-row items-center gap-3 px-[18px] py-3.5"
                 style={esActual ? { backgroundColor: 'rgba(123,45,59,0.07)' } : undefined}
               >
-                <Lomo genero={p.genero} ancho={34} alto={34} />
+                <Lomo
+                  genero={p.genero}
+                  ancho={34}
+                  alto={34}
+                  portada={uriPortada(p)}
+                  version={p.modificado}
+                />
                 <View className="min-w-0 flex-1">
                   <Text numberOfLines={1} className="font-lora-medium text-[14px] text-tinta">
                     {p.nombre}

@@ -3,6 +3,7 @@ import { Directory, File, Paths } from 'expo-file-system';
 import { parsearCapitulo, serializarCapitulo } from '@/lib/frontmatter';
 
 import {
+  BASE_PORTADA,
   CARPETA_MANUSCRITO,
   CARPETA_MUNDO,
   CARPETA_NOTAS,
@@ -22,6 +23,7 @@ import {
   nuevoId,
   ordenDesdeNombre,
   rutaFoto,
+  rutaPortada,
   segmentos,
 } from './rutas';
 import type {
@@ -284,6 +286,7 @@ function normalizarManifiesto(valor: unknown, nombreCarpeta: string): Manifiesto
     nombre: nombreCarpeta,
     genero: GENEROS.includes(m.genero as GeneroProyecto) ? (m.genero as GeneroProyecto) : 'nuevo',
     ordenCarpetas: carpetas.length > 0 ? carpetas : [...CARPETAS_POR_DEFECTO],
+    portada: typeof m.portada === 'string' && m.portada ? m.portada : null,
     creado: cadena(m.creado, cadena(m.modificado)),
     modificado: cadena(m.modificado, cadena(m.creado)),
   };
@@ -325,6 +328,7 @@ export function crearProyecto(nombre: string, genero: GeneroProyecto): Manifiest
     nombre: nombreFinal,
     genero,
     ordenCarpetas: [...CARPETAS_POR_DEFECTO],
+    portada: null,
     creado: momento,
     modificado: momento,
   };
@@ -832,6 +836,65 @@ export async function renombrarProyecto(viejo: string, nuevo: string): Promise<M
   };
   escribirJson(new File(destino, FICHERO_MANIFIESTO), actualizado);
   return actualizado;
+}
+
+// ---------------------------------------------------------------------------
+// Portada
+// ---------------------------------------------------------------------------
+
+/**
+ * Retira cualquier `portada.*` del proyecto salvo `conservar`. Como con las
+ * fotos de personaje: cambiar un .png por un .jpg no puede dejar el .png
+ * huérfano en Drive.
+ */
+function retirarPortadas(dir: Directory, conservar?: string): void {
+  if (!dir.exists) return;
+  for (const entrada of dir.list()) {
+    if (entrada instanceof Directory) continue;
+    if (entrada.name.replace(/\.[^.]+$/, '') !== BASE_PORTADA) continue;
+    if (entrada.uri === conservar) entrada.delete();
+    else retirarFichero(entrada);
+  }
+}
+
+async function reescribirManifiesto(
+  dir: Directory,
+  cambios: Partial<Manifiesto>,
+): Promise<Manifiesto | null> {
+  const fichero = new File(dir, FICHERO_MANIFIESTO);
+  const manifiesto = normalizarManifiesto(await leerJson<unknown>(fichero, null), dir.name);
+  if (!manifiesto) return null;
+  const actualizado: Manifiesto = { ...manifiesto, ...cambios, modificado: ahora() };
+  escribirJson(fichero, actualizado);
+  return actualizado;
+}
+
+/**
+ * Copia la imagen elegida como portada del proyecto. El original no se toca:
+ * la copia es nuestra y viaja a Drive con el resto del proyecto.
+ */
+export async function guardarPortada(
+  nombreProyecto: string,
+  origen: File,
+): Promise<Manifiesto | null> {
+  const dir = dirProyecto(nombreProyecto);
+  if (!dir.exists) return null;
+
+  const relativa = rutaPortada(extensionImagen(origen.name || origen.uri));
+  const destino = new File(dir, relativa);
+  retirarPortadas(dir, destino.uri);
+  origen.copySync(destino);
+  marcarSucio(destino.uri);
+
+  return reescribirManifiesto(dir, { portada: relativa });
+}
+
+/** Quita la portada personalizada: el proyecto vuelve al lomo de su género. */
+export async function quitarPortada(nombreProyecto: string): Promise<Manifiesto | null> {
+  const dir = dirProyecto(nombreProyecto);
+  if (!dir.exists) return null;
+  retirarPortadas(dir);
+  return reescribirManifiesto(dir, { portada: null });
 }
 
 export function borrarProyecto(nombre: string): void {

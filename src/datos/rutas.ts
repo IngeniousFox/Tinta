@@ -182,6 +182,14 @@ export function rutaFoto(nombrePersonaje: string, extension: string): string {
   return `${CARPETA_FOTOS}/${nombreSeguro(nombrePersonaje, 'Personaje')}${extension}`;
 }
 
+/** Nombre base de la portada, en la raíz del proyecto junto a `manifest.json`. */
+export const BASE_PORTADA = 'portada';
+
+/** `portada.jpg` — la portada personalizada del proyecto. */
+export function rutaPortada(extension: string): string {
+  return `${BASE_PORTADA}${extension}`;
+}
+
 /** Tipo MIME a partir de la extensión, para subir a Drive. */
 export function mimeDeImagen(extension: string): string {
   switch (extension) {

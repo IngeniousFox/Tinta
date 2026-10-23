@@ -6,7 +6,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Pantalla } from '@/components/Chrome';
 import { Icon } from '@/components/Icon';
 import { TextoEditable } from '@/components/TextoEditable';
-import { Avatar, EnlaceVolver, LabelSeccion } from '@/components/ui';
+import { Avatar, EnlaceVolver, LabelSeccion, Lomo } from '@/components/ui';
+import { uriPortada, usePortada } from '@/components/usePortada';
 import {
   useBorrarParte,
   useCrearParte,
@@ -46,6 +47,7 @@ export default function InteriorProyecto() {
   const renombrarParte = useRenombrarParte(proyecto);
   const borrarParte = useBorrarParte(proyecto);
   const renombrarProyecto = useRenombrarProyecto();
+  const portada = usePortada(data?.manifiesto);
 
   const [manuscrito, setManuscrito] = useState(true);
   const [personajes, setPersonajes] = useState(false);
@@ -198,26 +200,48 @@ export default function InteriorProyecto() {
       <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 100 }}>
         <EnlaceVolver etiqueta="Biblioteca" onPress={() => router.push('/')} />
 
-        {/* El nombre del proyecto se renombra tocándolo (TINTA-SPEC §4.1). */}
-        <TextoEditable
-          valor={proyecto}
-          onGuardar={confirmarNombreProyecto}
-          espera={120000}
-          style={{
-            marginTop: 12,
-            fontFamily: 'Lora_400Regular',
-            fontSize: 21,
-            lineHeight: 26,
-            color: '#2A2320',
-          }}
-        />
-        <View className="mt-2 flex-row gap-3.5">
-          <Text className="font-manrope-medium text-[12px] text-tinta-muted">
-            {plural(palabrasDeProyecto(data), 'palabra', 'palabras')}
-          </Text>
-          <Text className="font-manrope-medium text-[12px] text-verde">
-            {plural(capitulos, u.singular, u.plural)}
-          </Text>
+        <View className="mt-3 flex-row items-center gap-3.5">
+          {/* La portada se cambia tocándola; sin portada propia, el lomo del género. */}
+          <Pressable
+            onPress={portada.menu}
+            disabled={portada.ocupada}
+            accessibilityRole="button"
+            accessibilityLabel={data.manifiesto.portada ? 'Cambiar o quitar la portada' : 'Poner portada'}
+          >
+            <Lomo
+              genero={data.manifiesto.genero}
+              portada={uriPortada(data.manifiesto)}
+              version={data.manifiesto.modificado}
+            />
+            <View
+              className="absolute -bottom-1 -right-1 h-[22px] w-[22px] items-center justify-center rounded-full border border-borde bg-papel-card"
+              style={{ boxShadow: shadow.card }}
+            >
+              <Icon name={portada.ocupada ? 'hourglass_empty' : 'add_photo_alternate'} size={13} color="#5E1F2B" />
+            </View>
+          </Pressable>
+          <View className="min-w-0 flex-1">
+            {/* El nombre del proyecto se renombra tocándolo (TINTA-SPEC §4.1). */}
+            <TextoEditable
+              valor={proyecto}
+              onGuardar={confirmarNombreProyecto}
+              espera={120000}
+              style={{
+                fontFamily: 'Lora_400Regular',
+                fontSize: 21,
+                lineHeight: 26,
+                color: '#2A2320',
+              }}
+            />
+            <View className="mt-2 flex-row gap-3.5">
+              <Text className="font-manrope-medium text-[12px] text-tinta-muted">
+                {plural(palabrasDeProyecto(data), 'palabra', 'palabras')}
+              </Text>
+              <Text className="font-manrope-medium text-[12px] text-verde">
+                {plural(capitulos, u.singular, u.plural)}
+              </Text>
+            </View>
+          </View>
         </View>
 
         {/* Los chips desbordan en pantallas estrechas o con fuente grande:

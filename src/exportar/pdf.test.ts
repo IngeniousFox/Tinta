@@ -33,6 +33,7 @@ function proyecto(manuscrito: Carpeta[], genero: Proyecto['manifiesto']['genero'
       nombre: 'El jardín de las horas muertas',
       genero,
       ordenCarpetas: [],
+      portada: null,
       creado: '',
       modificado: '',
     },
